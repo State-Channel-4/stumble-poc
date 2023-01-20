@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
+
+// Uncomment this line to use console.log
+// import "hardhat/console.sol";
 
 // This contract allows users to submit URLs and upvote or downvote them
-contract URLRegistry {
+contract UrlContract {
     // The mapping of URLs to their metadata
-    mapping (string => URL) public urlToMetadata;
+    mapping(string => URL) public urlToMetadata;
 
     // The array of all submitted URLs, sorted by vote count
     URL[] public urlArray;
@@ -18,7 +21,10 @@ contract URLRegistry {
     // Function to submit a new URL
     function submitURL(string memory _url) public {
         // Check if the URL has already been submitted
-        require(keccak256(bytes(urlToMetadata[_url].url)) == keccak256(bytes("")), "URL has already been submitted");
+        require(
+            keccak256(bytes(urlToMetadata[_url].url)) == keccak256(bytes("")),
+            "URL has already been submitted"
+        );
 
         // Create a new URL struct and store it in the mapping
         urlToMetadata[_url] = URL(_url, 0);
@@ -64,7 +70,7 @@ contract URLRegistry {
     function getTopURLs() public view returns (string[] memory) {
         // Return a slice of the array with the top 10 URLs
         string[] memory top10 = new string[](urlArray.length);
-        for(uint i = 0; i < 10; i++) {
+        for (uint i = 0; i < 10; i++) {
             top10[i] = urlArray[i].url;
         }
         return top10;
@@ -73,7 +79,7 @@ contract URLRegistry {
     // return all urls
     function allURLs() public view returns (string[] memory) {
         string[] memory all_urls = new string[](urlArray.length);
-        for(uint i =0; i < urlArray.length; i++){
+        for (uint i = 0; i < urlArray.length; i++) {
             all_urls[i] = urlArray[i].url;
         }
         return all_urls;
