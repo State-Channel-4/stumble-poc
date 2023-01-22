@@ -56,6 +56,7 @@ async function getAllUrls() {
     const contract = new ethers.Contract(contractAddress, abi, signer);
     const urls = await contract.allURLs();
     console.log(urls);
+    populateTable(urls);
   }
 }
 
@@ -70,4 +71,98 @@ function listenForTransactionMined(transactionResponse, provider) {
       resolve();
     });
   });
+}
+
+function populateTable(data) {
+  // Clear any previously created table
+  var oldTable = document.querySelector("table");
+  if (oldTable) {
+    oldTable.remove();
+  }
+
+  var table = document.createElement("table");
+  for (var i = 0; i < data.length; i++) {
+    var row = document.createElement("tr");
+    var cell = document.createElement("td");
+    var text = document.createTextNode(data[i]);
+    cell.appendChild(text);
+    row.appendChild(cell);
+
+    // create upvote button
+    var upvoteBtn = document.createElement("button");
+    upvoteBtn.innerHTML = "Upvote";
+    upvoteBtn.setAttribute("style", "border-radius: 10px; font-size: large;");
+    upvoteBtn.onclick = (function (value) {
+      return function () {
+        // handle upvote logic
+        console.log("upvoted: " + value);
+        //you can do your update here
+        upvote_url(value);
+      };
+    })(data[i]);
+    row.appendChild(upvoteBtn);
+
+    // create downvote button
+    var downvoteBtn = document.createElement("button");
+    downvoteBtn.innerHTML = "Downvote";
+    downvoteBtn.setAttribute("style", "border-radius: 10px; font-size: large;");
+    downvoteBtn.onclick = (function (value) {
+      return function () {
+        // handle downvote logic
+        console.log("downvoted: " + value);
+        //you can do your update here
+        downvote_url(value);
+      };
+    })(data[i]);
+    row.appendChild(downvoteBtn);
+
+    // create Get Count button
+    var getCountBtn = document.createElement("button");
+    getCountBtn.innerHTML = "Get Count";
+    getCountBtn.setAttribute("style", "border-radius: 10px; font-size: large;");
+    getCountBtn.onclick = (function (value) {
+      return async function () {
+        // handle Get Count logic
+        console.log("count of : " + value);
+        //you can display the count here
+        var count = await get_count(value); // call the function to get the count;
+        console.log("count of : " + value + " is " + count);
+      };
+    })(data[i]);
+    row.appendChild(getCountBtn);
+
+    table.appendChild(row);
+  }
+  document.body.appendChild(table);
+}
+
+async function upvote_url(url) {
+  if (typeof window.ethereum != "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const upvoted = await contract.upvoteURL(url);
+    console.log(upvoted);
+  }
+}
+
+async function downvote_url(url) {
+  if (typeof window.ethereum != "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const upvoted = await contract.downvoteURL(url);
+    console.log(upvoted);
+  }
+}
+
+async function get_count(url) {
+  if (typeof window.ethereum != "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const upvoted = await contract.getcount(url);
+    console.log(upvoted.toNumber());
+    return upvoted.toNumber();
+  }
 }

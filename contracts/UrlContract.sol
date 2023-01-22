@@ -42,6 +42,12 @@ contract UrlContract {
         sortURLArray();
     }
 
+    // function to return upvote/downvote count of a URL
+    function getcount(string memory _url) public view returns (int) {
+        // return votecount
+        return urlToMetadata[_url].voteCount;
+    }
+
     // Function to downvote a URL
     function downvoteURL(string memory _url) public {
         // Decrement the vote count for the URL
