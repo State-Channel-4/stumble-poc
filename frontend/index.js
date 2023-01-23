@@ -4,10 +4,12 @@ import { abi, contractAddress } from "./constants.js";
 const connectButton = document.getElementById("connectButton");
 const submitUrlButton = document.getElementById("submitUrlButton");
 const getAllUrlsButton = document.getElementById("getAllUrlsButton");
+const stumbleButton = document.getElementById("stumbleButton");
 
 connectButton.onclick = connect;
 submitUrlButton.onclick = submiturl;
 getAllUrlsButton.onclick = getAllUrls;
+stumbleButton.onclick = stumble;
 
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
@@ -21,7 +23,7 @@ async function connect() {
     console.log(accounts);
   } else {
     console.log("no metamask");
-    fundButton.innerText = "Please install metamask";
+    connectButton.innerText = "Please install metamask";
   }
 }
 
@@ -134,6 +136,7 @@ function populateTable(data) {
     table.appendChild(row);
   }
   document.body.appendChild(table);
+  document.body.appendChild(document.createElement("hr"));
 }
 
 async function upvote_url(url) {
@@ -165,4 +168,38 @@ async function get_count(url) {
     console.log(upvoted.toNumber());
     return upvoted.toNumber();
   }
+}
+
+async function stumble() {
+  var frame = document.querySelector("iframe");
+  if (frame) {
+    frame.remove();
+  }
+  let url = "";
+  if (typeof window.ethereum != "undefined") {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    url = await contract.stumble();
+    console.log(url);
+  }
+
+  // Create an iframe element
+  const iframe = document.createElement("iframe");
+  iframe.sandbox = "allow-same-origin allow-scripts";
+
+  // Set the src attribute to the returned URL
+  iframe.src = url;
+  console.log(iframe.src);
+
+  // Set the style of the iframe to take up the full width of the screen
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  //iframe.style.position = "absolute";
+  iframe.style.top = "0";
+  iframe.style.left = "0";
+  iframe.style.zIndex = "1";
+
+  // Append the iframe to the body of the HTML page
+  document.body.appendChild(iframe);
 }

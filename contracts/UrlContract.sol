@@ -90,4 +90,13 @@ contract UrlContract {
         }
         return all_urls;
     }
+
+    // stumble functionality
+    function stumble() public view returns (string memory) {
+        uint arrayLength = urlArray.length;
+        uint randomIndex = uint(
+            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
+        ) % arrayLength;
+        return urlArray[randomIndex].url;
+    }
 }
