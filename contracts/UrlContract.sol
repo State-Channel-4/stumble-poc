@@ -91,12 +91,13 @@ contract UrlContract {
         return all_urls;
     }
 
-    // stumble functionality
-    function stumble() public view returns (string memory) {
-        uint arrayLength = urlArray.length;
-        uint randomIndex = uint(
-            keccak256(abi.encodePacked(block.timestamp, block.difficulty))
-        ) % arrayLength;
-        return urlArray[randomIndex].url;
+    // return urlArray length
+    function urlArray_length() public view returns (uint) {
+        return urlArray.length;
+    }
+
+    // return element from urlArray
+    function urlArray_element(uint index) public view returns (string memory) {
+        return urlArray[index].url;
     }
 }

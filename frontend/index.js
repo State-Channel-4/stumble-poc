@@ -170,18 +170,25 @@ async function get_count(url) {
   }
 }
 
+function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 async function stumble() {
-  var frame = document.querySelector("iframe");
-  if (frame) {
-    frame.remove();
-  }
   let url = "";
   if (typeof window.ethereum != "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, abi, signer);
-    url = await contract.stumble();
+    const array_length = await contract.urlArray_length();
+    const index = getRndInteger(0, array_length.toNumber());
+
+    url = await contract.urlArray_element(index);
     console.log(url);
+  }
+  var frame = document.querySelector("iframe");
+  if (frame) {
+    frame.remove();
   }
 
   // Create an iframe element
