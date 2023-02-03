@@ -18,6 +18,23 @@ contract UrlContract {
         int voteCount;
     }
 
+    // update manager
+    function update_fields(
+        string[] memory upvotes,
+        string[] memory downvotes,
+        string[] memory submit_urls
+    ) public {
+        for (uint i = 0; i < upvotes.length; i++) {
+            upvoteURL(upvotes[i]);
+        }
+        for (uint i = 0; i < downvotes.length; i++) {
+            downvoteURL(downvotes[i]);
+        }
+        for (uint i = 0; i < submit_urls.length; i++) {
+            submitURL(submit_urls[i]);
+        }
+    }
+
     // Function to submit a new URL
     function submitURL(string memory _url) public {
         // Check if the URL has already been submitted

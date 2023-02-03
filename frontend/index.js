@@ -5,11 +5,15 @@ const connectButton = document.getElementById("connectButton");
 const submitUrlButton = document.getElementById("submitUrlButton");
 const getAllUrlsButton = document.getElementById("getAllUrlsButton");
 const stumbleButton = document.getElementById("stumbleButton");
+const openChannelButton = document.getElementById("openChannel");
+const closeChannelButton = document.getElementById("closeChannel");
 
 connectButton.onclick = connect;
 submitUrlButton.onclick = submiturl;
 getAllUrlsButton.onclick = getAllUrls;
 stumbleButton.onclick = stumble;
+openChannelButton.onclick = openChannel;
+closeChannelButton.onclick = closeChannel;
 
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
@@ -24,6 +28,51 @@ async function connect() {
   } else {
     console.log("no metamask");
     connectButton.innerText = "Please install metamask";
+  }
+}
+
+async function openChannel() {
+  openChannelButton.disabled = true;
+  closeChannelButton.disabled = false;
+  window.localStorage.setItem("upvote_urls", JSON.stringify([]));
+  window.localStorage.setItem("downvote_urls", JSON.stringify([]));
+  window.localStorage.setItem("submit_urls", JSON.stringify([]));
+  console.log(Object.keys(localStorage));
+}
+
+async function closeChannel() {
+  openChannelButton.disabled = false;
+  closeChannelButton.disabled = true;
+  var upvotes = [...new Set(JSON.parse(window.localStorage.upvote_urls))];
+  var downvotes = [...new Set(JSON.parse(window.localStorage.downvote_urls))];
+  var submit_urls = [...new Set(JSON.parse(window.localStorage.submit_urls))];
+  console.log("data : ", upvotes, downvotes, submit_urls);
+
+  // clear localstorage
+  window.localStorage.clear();
+
+  if (typeof window.ethereum != "undefined") {
+    // provider / connection to the blockchain
+    // signer / wallet / someone with some gas
+    // contract that we are interacting with
+    // ^ ABI & address
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    console.log("signer : ", signer);
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    try {
+      const transactionResponse = await contract.update_fields(
+        upvotes,
+        downvotes,
+        submit_urls
+      );
+      // listen for tx to be mined
+      // wait for tx to finish
+      await listenForTransactionMined(transactionResponse, provider);
+      console.log("Done!!");
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -141,21 +190,27 @@ function populateTable(data) {
 
 async function upvote_url(url) {
   if (typeof window.ethereum != "undefined") {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, abi, signer);
-    const upvoted = await contract.upvoteURL(url);
-    console.log(upvoted);
+    var upvote = JSON.parse(window.localStorage.upvote_urls);
+    upvote.push(url);
+    window.localStorage.setItem("upvote_urls", JSON.stringify(upvote));
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // const contract = new ethers.Contract(contractAddress, abi, signer);
+    // const upvoted = await contract.upvoteURL(url);
+    // console.log(upvoted);
   }
 }
 
 async function downvote_url(url) {
   if (typeof window.ethereum != "undefined") {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, abi, signer);
-    const upvoted = await contract.downvoteURL(url);
-    console.log(upvoted);
+    var downvote = JSON.parse(window.localStorage.upvote_urls);
+    downvote.push(url);
+    window.localStorage.setItem("downvote_urls", JSON.stringify(downvote));
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const signer = provider.getSigner();
+    // const contract = new ethers.Contract(contractAddress, abi, signer);
+    // const upvoted = await contract.downvoteURL(url);
+    // console.log(upvoted);
   }
 }
 

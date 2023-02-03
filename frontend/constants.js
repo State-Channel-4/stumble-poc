@@ -74,6 +74,29 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: "string[]",
+        name: "upvotes",
+        type: "string[]",
+      },
+      {
+        internalType: "string[]",
+        name: "downvotes",
+        type: "string[]",
+      },
+      {
+        internalType: "string[]",
+        name: "submit_urls",
+        type: "string[]",
+      },
+    ],
+    name: "update_fields",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "string",
         name: "_url",
         type: "string",
