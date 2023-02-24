@@ -102,6 +102,7 @@ async function submiturl() {
   }
 }
 
+  // probably not need on main frontend, keeping it for testing
 async function getAllUrls() {
   if (typeof window.ethereum != "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
