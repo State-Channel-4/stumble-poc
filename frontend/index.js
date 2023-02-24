@@ -7,13 +7,15 @@ const getAllUrlsButton = document.getElementById("getAllUrlsButton");
 const stumbleButton = document.getElementById("stumbleButton");
 const openChannelButton = document.getElementById("openChannel");
 const closeChannelButton = document.getElementById("closeChannel");
+const upvoteButton = document.getElementById("upvoteButton");
+const downvoteButton = document.getElementById("downvoteButton");
 
-connectButton.onclick = connect;
 submitUrlButton.onclick = submiturl;
-getAllUrlsButton.onclick = getAllUrls;
 stumbleButton.onclick = stumble;
 openChannelButton.onclick = openChannel;
 closeChannelButton.onclick = closeChannel;
+upvoteButton.onclick = upvote_url;
+downvoteButton.onclick = downvote_url;
 
 async function connect() {
   if (typeof window.ethereum !== "undefined") {
@@ -188,9 +190,11 @@ function populateTable(data) {
   document.body.appendChild(document.createElement("hr"));
 }
 
-async function upvote_url(url) {
+async function upvote_url() {
   if (typeof window.ethereum != "undefined") {
     var upvote = JSON.parse(window.localStorage.upvote_urls);
+    var url = document.getElementById("stumble-iframe").src;
+    console.log("url is : ", url);
     upvote.push(url);
     window.localStorage.setItem("upvote_urls", JSON.stringify(upvote));
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -201,9 +205,10 @@ async function upvote_url(url) {
   }
 }
 
-async function downvote_url(url) {
+async function downvote_url() {
   if (typeof window.ethereum != "undefined") {
     var downvote = JSON.parse(window.localStorage.upvote_urls);
+    var url = document.getElementById("stumble-iframe").src;
     downvote.push(url);
     window.localStorage.setItem("downvote_urls", JSON.stringify(downvote));
     // const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -241,27 +246,9 @@ async function stumble() {
     url = await contract.urlArray_element(index);
     console.log(url);
   }
-  var frame = document.querySelector("iframe");
-  if (frame) {
-    frame.remove();
-  }
+  // modify iframe url
+  var stumble_iframe = document.getElementById("stumble-iframe");
+  stumble_iframe.src = url;
+  document.getElementById("stumble-iframe").contentWindow.location.reload(true);
 
-  // Create an iframe element
-  const iframe = document.createElement("iframe");
-  iframe.sandbox = "allow-same-origin allow-scripts";
-
-  // Set the src attribute to the returned URL
-  iframe.src = url;
-  console.log(iframe.src);
-
-  // Set the style of the iframe to take up the full width of the screen
-  iframe.style.width = "100%";
-  iframe.style.height = "100%";
-  //iframe.style.position = "absolute";
-  iframe.style.top = "0";
-  iframe.style.left = "0";
-  iframe.style.zIndex = "1";
-
-  // Append the iframe to the body of the HTML page
-  document.body.appendChild(iframe);
 }

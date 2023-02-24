@@ -5,21 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StumbleUpon POC</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    StumbleUpon web3 app!
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="navbar-title">StumbleUpon</div>
+            <div class="navbar-buttons">
+              <button id="upvoteButton" class="navbar-button" style="border-radius: 10px; font-size: large;">Upvote</button>
+              <button id="stumbleButton" class="navbar-button" style="border-radius: 10px; font-size: large;">Stumble</button>
+              <button id="downvoteButton" class="navbar-button" style="border-radius: 10px; font-size: large;">Downvote</button>
+            </div>
+            <div class="navbar-right">
+              <form class="navbar-form">
+                <input class="url-input" id="stumble-url" type="text" placeholder="Enter URL">
+                <!-- <button class="submit-button" type="submit">Submit</button> -->
+              </form>
+              <button class="navbar-button" id ="submitUrlButton"style="border-radius: 10px; font-size: large;">Submit URL</button>
+              <button id="openChannel" style="border-radius: 10px; font-size: large;">OpenChannel</button>
+              <button id="closeChannel" style="border-radius: 10px; font-size: large;" disabled="true">closeChannel</button>
+            </div>
+          </nav>
+      
+          <!-- Iframe -->
+          <div class="iframe-container">
+            <iframe class="iframe" id="stumble-iframe" src="https://channel4.wtf/" frameborder="0"></iframe>
+          </div>
     <script src="index.js" type="module"></script>
-    <button id="connectButton" style="border-radius: 10px; font-size: large;">connect</button>
+    <!-- <button id="connectButton" style="border-radius: 10px; font-size: large;">connect</button>
     <button id="openChannel" style="border-radius: 10px; font-size: large;">openChannel</button>
     <button id="closeChannel" style="border-radius: 10px; font-size: large;" disabled="true">closeChannel</button>
-    <hr/>
-    <!-- form -->
-    <label for="fund">Submit url</label>
-    <input type="url" id="stumble-url" placeholder="https://ethereum.org/en/" style="border-radius: 10px;"/>
-    <button id="submitUrlButton" style="border-radius: 10px; font-size: large;">Submit</button>
-    <hr/>
     <button id="getAllUrlsButton" style="border-radius: 10px; font-size: large;">Get all urls</button>
-    <hr/>
-    <button id="stumbleButton" style="border-radius: 10px; font-size: large;">Stumble</button>
+    <button id="stumbleButton" style="border-radius: 10px; font-size: large;">Stumble</button> -->
 </body>
 </html>

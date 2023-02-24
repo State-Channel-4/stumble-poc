@@ -1,0 +1,99 @@
+      /* Navbar styling */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #333;
+        color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+      }
+      .navbar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .navbar-buttons {
+        display: flex;
+        gap: 10px;
+      }
+      .navbar-button {
+        padding: 5px 10px;
+        border: none;
+        background-color: #555;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .navbar-button:hover {
+        background-color: #777;
+      }
+      .navbar-right {
+        display: flex;
+        gap: 10px;
+      }
+      .openchannel-button {
+        padding: 5px 10px;
+        border: none;
+        background-color: #0077ff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .openchannel-button:hover {
+        background-color: #0059b3;
+      }
+
+      /* Iframe styling */
+      .iframe-container {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      .iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .navbar-form {
+        display: flex;
+        gap: 10px;
+      }
+      .url-input {
+        width: 300px;
+        padding: 5px;
+        border: none;
+        border-radius: 5px;
+      }
+      .submit-button {
+        padding: 5px 10px;
+        border: none;
+        background-color: #0077ff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Responsive styling */
+      @media screen and (max-width: 600px) {
+        /* Navbar */
+        .navbar {
+          flex-direction: column;
+        }
+        .navbar-title {
+          margin-bottom: 10px;
+        }
+        .navbar-buttons,
+        .navbar-right {
+          margin-top: 10px;
+        }
+        /* Iframe */
+        .iframe-container {
+          top: 100px;
+        }
+      }
