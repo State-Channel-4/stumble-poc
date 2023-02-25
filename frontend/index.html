@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StumbleUpon POC</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
 </head>
 <body>
         <!-- Navbar -->
         <nav class="navbar">
           <div class="navbar-logo">
-            <img src="logo.png" alt="StumbleUpon Logo">
+            <a href="#"><img src="logo.png" alt="StumbleUpon Logo"></a>
             <span class="navbar-title">StumbleUpon</span>
           </div>
             <div class="navbar-buttons">
@@ -37,6 +38,8 @@
             <iframe class="iframe" id="stumble-iframe" src="https://channel4.wtf/" frameborder="0"></iframe>
           </div>
     <script src="index.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
+    <script src="tour.js"></script>
     <!-- <button id="connectButton" style="border-radius: 10px; font-size: large;">connect</button>
     <button id="openChannel" style="border-radius: 10px; font-size: large;">openChannel</button>
     <button id="closeChannel" style="border-radius: 10px; font-size: large;" disabled="true">closeChannel</button>
