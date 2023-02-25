@@ -12,12 +12,23 @@
         right: 0;
         z-index: 1;
       }
+      .navbar-logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-logo img {
+        height: 2rem;
+        margin-right: 0.5rem;
+      }
+
       .navbar-title {
         font-size: 1.5rem;
-        font-weight: bold;
       }
       .navbar-buttons {
         display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
       }
       .navbar-button {
@@ -30,6 +41,10 @@
       }
       .navbar-button:hover {
         background-color: #777;
+      }
+      .navbar-left {
+        display: flexbox;
+        gap: 10px;
       }
       .navbar-right {
         display: flex;
