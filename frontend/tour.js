@@ -14,7 +14,8 @@ const tour = new Shepherd.Tour({
           action: this.next
         }
       ]
-    }
+    },
+    useModalOverlay: true
   });
 
   // Add the steps to the tour
@@ -26,6 +27,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+        {
+          text: 'Skip',
+          action: tour.cancel,
+          classes: 'shepherd-button-secondary'
+        },
         {
             text: 'Next',
             action: tour.next
@@ -41,6 +47,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -61,6 +72,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -81,6 +97,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -101,6 +122,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -121,6 +147,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -141,6 +172,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -161,6 +197,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -181,6 +222,11 @@ const tour = new Shepherd.Tour({
       on: 'bottom'
     },
     buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
         {
             text: 'Back',
             action: tour.back,
@@ -193,5 +239,9 @@ const tour = new Shepherd.Tour({
     ]
   });
 
+// Initiate the tour
+if(!localStorage.getItem('shepherd-tour')) {
   // Start the tour
   tour.start();
+  localStorage.setItem('shepherd-tour', 'yes');
+}
