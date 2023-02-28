@@ -10,6 +10,7 @@ const closeChannelButton = document.getElementById("closeChannel");
 const upvoteButton = document.getElementById("upvoteButton");
 const downvoteButton = document.getElementById("downvoteButton");
 
+connectButton.onclick = connect;
 submitUrlButton.onclick = submiturl;
 stumbleButton.onclick = stumble;
 openChannelButton.onclick = openChannel;
@@ -78,8 +79,23 @@ async function closeChannel() {
   }
 }
 
+function checkHttpUrl(url) {
+  let givenURL;
+  try {
+      givenURL = new URL(url);
+  } catch (error) {
+      console.log("error is",error)
+    return false;
+  }
+  return givenURL.protocol === "http:" || givenURL.protocol === "https:";
+}
+
 async function submiturl() {
   let url = document.getElementById("stumble-url").value;
+  if (!checkHttpUrl(url)) {
+    alert("invalid url")
+    return
+  }
   console.log("submit url : ", url);
   if (typeof window.ethereum != "undefined") {
     // provider / connection to the blockchain
@@ -97,7 +113,10 @@ async function submiturl() {
       await listenForTransactionMined(transactionResponse, provider);
       console.log("Done!!");
     } catch (error) {
-      console.log(error);
+      error = JSON.stringify(error)
+      error = JSON.parse(error);
+      console.log(error.error);
+      alert(error.error.message);
     }
   }
 }
@@ -235,20 +254,41 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+
+function fixUrl(url) {
+  // Regular expression to check URL format with "http://" or "https://"
+  const urlPattern = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/i;
+
+  if (!urlPattern.test(url)) {
+    // Invalid URL format, add "https://" to the beginning of the URL
+    url = `https://${url}`;
+  }
+
+  return url;
+}
+
+
 async function stumble() {
   let url = "";
-  if (typeof window.ethereum != "undefined") {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, abi, signer);
+  const provider = new ethers.providers.JsonRpcProvider("https://rpc.sepolia.org");
+  const contract = new ethers.Contract(contractAddress, abi, provider);
+  // if (typeof window.ethereum != "undefined") {
+  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //   const signer = provider.getSigner();
+  //   const contract = new ethers.Contract(contractAddress, abi, signer);
+  //   }
     const array_length = await contract.urlArray_length();
+    console.log("array length : ", array_length.toNumber());
     const index = getRndInteger(0, array_length.toNumber());
 
     url = await contract.urlArray_element(index);
     console.log(url);
-  }
+    url = fixUrl(url);
+    console.log("fixed url : ", url);
+
   // modify iframe url
   var stumble_iframe = document.getElementById("stumble-iframe");
+  console.log("iframe : ", stumble_iframe.src);
   stumble_iframe.src = url;
   document.getElementById("stumble-iframe").contentWindow.location.reload(true);
 

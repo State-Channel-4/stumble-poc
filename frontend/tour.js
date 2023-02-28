@@ -20,7 +20,7 @@ const tour = new Shepherd.Tour({
 
   // Add the steps to the tour
   tour.addStep({
-    title: 'Welcome to StumbleUpon',
+    title: 'Welcome to Channel4',
     text: 'This is the navbar, which contains links to different parts of the site.',
     attachTo: {
       element: '.navbar',
@@ -40,8 +40,8 @@ const tour = new Shepherd.Tour({
   });
 
   tour.addStep({
-    title: 'StumbleUpon Logo',
-    text: 'This is the StumbleUpon logo, which will take you back to the homepage if you click it.',
+    title: 'Channel4 Logo',
+    text: 'This is the Channel4 logo, which will take you back to the homepage if you click it.',
     attachTo: {
       element: '.navbar-logo',
       on: 'bottom'
@@ -91,7 +91,7 @@ const tour = new Shepherd.Tour({
 
   tour.addStep({
     title: 'Submit Button',
-    text: 'This is the submit button, which you can use to submit the URL you entered in the input field.',
+    text: 'This is the submit button, which you can use to submit the URL you entered in the input field. <code><b>Wallet connection needed for this action</b></code>',
     attachTo: {
       element: '#submitUrlButton',
       on: 'bottom'
@@ -116,7 +116,7 @@ const tour = new Shepherd.Tour({
 
   tour.addStep({
     title: 'Upvote Button',
-    text: 'This is the upvote button, which you can use to show your approval of a page.',
+    text: 'This is the upvote button, which you can use to show your approval of a page. <code><b>Wallet connection needed for this action</b></code>',
     attachTo: {
       element: '#upvoteButton',
       on: 'bottom'
@@ -166,7 +166,7 @@ const tour = new Shepherd.Tour({
 
   tour.addStep({
     title: 'Downvote Button',
-    text: 'This is the downvote button, which you can use to show your disapproval of a page.',
+    text: 'This is the downvote button, which you can use to show your disapproval of a page.<code><b>Wallet connection needed for this action</b></code>',
     attachTo: {
       element: '#downvoteButton',
       on: 'bottom'
@@ -219,6 +219,31 @@ const tour = new Shepherd.Tour({
     text: 'Once you are done with your upvote/downvote actions. You must use CloseChannel to submit your votes to the chain.',
     attachTo: {
       element: '#closeChannel',
+      on: 'bottom'
+    },
+    buttons: [
+      {
+        text: 'Skip',
+        action: tour.cancel,
+        classes: 'shepherd-button-secondary'
+      },
+        {
+            text: 'Back',
+            action: tour.back,
+            classes: 'shepherd-button-secondary'
+        },
+        {
+            text: 'Next',
+            action: tour.next
+        }
+    ]
+  });
+
+  tour.addStep({
+    title: 'Connect Button',
+    text: 'Connect button connects your metamask wallet with the site. In order to perform any on-chain action like upvote/downvote or submitting url, you must connect first.',
+    attachTo: {
+      element: '#connectButton',
       on: 'bottom'
     },
     buttons: [

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StumbleUpon POC</title>
+    <title>Channel4 POC</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
 </head>
@@ -12,14 +12,14 @@
         <!-- Navbar -->
         <nav class="navbar">
           <div class="navbar-logo">
-            <a href="#"><img src="logo.png" alt="StumbleUpon Logo"></a>
-            <span class="navbar-title">StumbleUpon</span>
+            <a href="#" onclick="window.location.reload()"><img src="logo.png" alt="Channel4 Logo"></a>
+            <span class="navbar-title">Channel4</span>
           </div>
             <div class="navbar-buttons">
               <form class="navbar-form">
-                <input class="url-input" id="stumble-url" type="text" placeholder="submit URL for others">
-                <button type="button" navbar-button" id ="submitUrlButton"style="border-radius: 10px; font-size: large;">&#8680;</button>
-                <!-- <button class="submit-button" type="submit">Submit</button> -->
+                <input type="url" class="url-input" id="stumble-url"  placeholder="submit URL for others" pattern="https?://.+" required>
+                <button type="button" class ="navbar-button" id ="submitUrlButton"style="border-radius: 10px; font-size: large;">&#8680;</button>
+                <!-- <input type="submit" class="navbar-button" value="&#8680;" id="submitUrlButton" style="border-radius: 10px; font-size: large;" onclick="this.preventDefault()"> -->
               </form>
               <button id="upvoteButton" class="navbar-button" style="border-radius: 10px; font-size: large;">&#x1F44D;</button>
               <button id="stumbleButton" class="navbar-button" style="border-radius: 10px; font-size: large;">Stumble</button>
@@ -27,16 +27,18 @@
             </div>
             <div class="navbar-right">
 
-              
+              <button id="connectButton" style="border-radius: 10px; font-size: large;">Connect</button>
               <button id="openChannel" style="border-radius: 10px; font-size: large;">OpenChannel</button>
               <button id="closeChannel" style="border-radius: 10px; font-size: large;" disabled="true">closeChannel</button>
               <button id="tour-start" class="navbar-title" onclick="tour.start()" style="border-radius: 10px; font-size: large;">&#x3F;</button>
+              <button id="feedback" style="border-radius: 10px; font-size: large;" onclick="window.open('https://airtable.com/shrGNTW2IFm2o0cKJ','_blank')">Feedback</button>
+
             </div>
           </nav>
       
           <!-- Iframe -->
           <div class="iframe-container">
-            <iframe class="iframe" id="stumble-iframe" src="https://channel4.wtf/" frameborder="0"></iframe>
+            <iframe sandbox ="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts" class="iframe" id="stumble-iframe" src="https://channel4.wtf/" frameborder="0"></iframe>
           </div>
     <script src="index.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
