@@ -112,6 +112,7 @@ async function submiturl() {
       // wait for tx to finish
       await listenForTransactionMined(transactionResponse, provider);
       console.log("Done!!");
+      alert("url submitted successfully!!")
     } catch (error) {
       error = JSON.stringify(error)
       error = JSON.parse(error);
